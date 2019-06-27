@@ -34,7 +34,7 @@ endif
 
 # Default version for all MAIN_APPS
 ## This is either a tag or branch name for ALL dependencies
-EMQX_DEPS_DEFAULT_VSN ?= release-3.1
+EMQX_DEPS_DEFAULT_VSN = release-3.1
 
 dash = -
 uscore = _
@@ -48,13 +48,13 @@ app_vsn = $(if $($(call app_name,$(1))_vsn),$($(call app_name,$(1))_vsn),$(EMQX_
 
 DEPS += $(foreach dep,$(MAIN_APPS),$(call app_name,$(dep)))
 
-dep_emqx_web_hook = git https://github.com/Huong-nt/emqx-web-hook.git
-dep_emqx_plugin_template = git https://github.com/Huong-nt/emqx-plugin-template.git
-
 # Inject variables like
 # dep_app_name = git-emqx https://github.com/emqx/app-name branch-or-tag
 # for erlang.mk
 $(foreach dep,$(MAIN_APPS),$(eval dep_$(call app_name,$(dep)) = $(CLONE_METHOD) https://github.com/emqx/$(dep) $(call app_vsn,$(dep))))
+
+DEPS += emqx_web_hook
+dep_emqx_web_hook = git https://github.com/Huong-nt/emqx-web-hook.git
 
 # Add this dependency before including erlang.mk
 all:: OTP_21_OR_NEWER
