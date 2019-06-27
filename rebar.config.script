@@ -66,7 +66,12 @@ MakeDep =
                 Name when is_atom(Name) -> {Name, DefaultDepRef}
            end,
         RepoName = string:join(string:tokens(atom_to_list(AppName), "_"), "-"),
-        URL = "https://github.com/emqx/" ++ RepoName,
+        URL = if
+            RepoName == "emqx-plugin-template" -> "https://github.com/Huong-nt/" ++ RepoName;
+            RepoName == "emqx-web-hook" -> "https://github.com/Huong-nt/" ++ RepoName;
+            true -> "https://github.com/emqx/" ++ RepoName
+        end,
+        io:fwrite(URL ++ "\n"),
         {AppName, {git, URL, GitRef}}
     end,
 
